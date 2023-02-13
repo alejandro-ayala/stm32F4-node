@@ -1,35 +1,52 @@
 
 #include "CommunicationManager.h"
-#include "../HW/CanController.h"
+#include "CanController.h"
+#include "CanIDs.h"
+#include "IData.h"
+#include <iostream>
+using namespace ClockSyncronization;
+
 namespace Communication
 {
-CommunicationManager::CommunicationManager()
+
+CommunicationManager::CommunicationManager(TimeController* timecontroller, Communication::ICommunication* icomm)  : timeController(timecontroller), canController(icomm)
 {
-	canController = new CanController();
 }
 
 CommunicationManager::~CommunicationManager()
 {
-	delete canController;
 }
 
 void CommunicationManager::initialization()
 {
-	canController->initialize();
+	//canController->initialize();
 }
 
-void CommunicationManager::sendMsg()
+void CommunicationManager::sendData(IData msg)
 {
-	uint8_t idMsg;
-	uint8_t *txMsg;
-	uint8_t msgLength;
-	canController->transmitMsg(idMsg,txMsg,msgLength);
+	uint64_t localNs = timeController->getLocalTime();
+	msg.timestamp = localNs;
+	uint8_t serializedMsg[20];
+	uint8_t frameSize = msg.serialize(serializedMsg) + 7;
+	std::cout << "sendingMsg[ " << serializedMsg[5] << "]" << msg.timestamp << "-" << serializedMsg[7] << serializedMsg[8] << serializedMsg[9] << serializedMsg[10] << std::endl;
+
+	canController->transmitMsg(static_cast<uint8_t>(CAN_IDs::SENSOR_DATA), serializedMsg,frameSize);
+
 }
 
-void CommunicationManager::receiveMsg()
+void CommunicationManager::receiveData()
 {
-	uint8_t *rxMsg;
-	canController->receiveMsg(rxMsg);
+	uint8_t lenght = 800;
+	uint8_t data[lenght];
+	int msgSize = canController->receiveMsg(data);
+
+	if(msgSize > 0)
+	{
+		//xil_printf("\n\rReceived data: %d bytes", msgSize);
+		IData parsedMsg;
+		parsedMsg.deSerialize(data);
+		std::cout << "newData[" << parsedMsg.secCounter << "]. sec: " << parsedMsg.timestamp << std::endl;
+	}
 }
 
 bool CommunicationManager::selfTest()
