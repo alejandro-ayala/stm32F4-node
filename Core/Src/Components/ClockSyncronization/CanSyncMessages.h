@@ -1,4 +1,7 @@
 #pragma once
+
+namespace Components
+{
 namespace ClockSyncronization
 {
 enum class SYNC_MSG_TYPES
@@ -44,4 +47,5 @@ typedef struct
 		return 8;
 	}
 } CanFUPMessage;
+}
 }

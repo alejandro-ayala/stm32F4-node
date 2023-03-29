@@ -1,10 +1,16 @@
 #pragma once
-#include "../HW/IController.h"
-#include "../ClockSyncronization/ITimer.h"
+
+#include "ClockSyncronization/ITimer.h"
+#include "Controllers/IController.h"
+
 #include "TimeStamp.h"
+
+
+namespace Components
+{
 namespace ClockSyncronization
 {
-class TimeController : public Hardware::IController
+class TimeController : public Controllers::IController
 {
 private:
 	ITimer* internalTimer;
@@ -28,4 +34,5 @@ public:
 	TimeStamp getGlobalTimeReference();
 	uint64_t getLocalTime();
 };
+}
 }

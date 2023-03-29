@@ -1,5 +1,8 @@
 #pragma once
 #include <stdint.h>
+
+namespace Components
+{
 namespace ClockSyncronization
 {
 class ITimer {
@@ -17,4 +20,5 @@ public:
 	virtual double getCurrentUsec()  = 0;
 	virtual double getCurrentNsec()  = 0;
 };
+}
 }

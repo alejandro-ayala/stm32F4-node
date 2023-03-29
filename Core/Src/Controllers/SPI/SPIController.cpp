@@ -1,6 +1,6 @@
-#include "SPIController.h"
+#include "../../Controllers/SPI/SPIController.h"
 
-namespace Hardware
+namespace Controllers
 {
 
 SPIController::SPIController() : IController("SPIController")

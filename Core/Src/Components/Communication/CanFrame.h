@@ -1,8 +1,9 @@
 
 
+namespace Components
+{
 namespace Communication
 {
-
 typedef enum CAN_RxBuffer {
    CAN_Rx0 = 0, CAN_Rx1
 } CAN_RxBuffer;
@@ -32,3 +33,4 @@ typedef struct CanFrame {
 } CanFrame;
 
 }  // namespace Communication
+}

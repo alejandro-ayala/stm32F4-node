@@ -1,5 +1,7 @@
 #pragma once
 
+namespace Components
+{
 namespace Communication
 {
 #define CAN_MODIFY_REG_CMD        0x05
@@ -61,3 +63,4 @@ namespace Communication
 
 
 }  // namespace Communication
+}

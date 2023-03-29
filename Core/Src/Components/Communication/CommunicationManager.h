@@ -1,18 +1,22 @@
 #pragma once
-#include "ICommunication.h"
+
 #include "IData.h"
+#include "Controllers/CAN/CanController.h"
 #include "ClockSyncronization/TimeStamp.h"
 #include "ClockSyncronization/TimeController.h"
+
+namespace Components
+{
 namespace Communication
 {
 class CommunicationManager
 {
 private:
-	ICommunication*                      canController;
 	ClockSyncronization::TimeController* timeController;
-	TimeStamp                            globalTimeStamp;
+	Controllers::CanController*          canController;
+	ClockSyncronization::TimeStamp       globalTimeStamp;
 public:
-	CommunicationManager(ClockSyncronization::TimeController* timecontroller, Communication::ICommunication* icomm);
+	CommunicationManager(ClockSyncronization::TimeController* timecontroller, Controllers::CanController* canController);
 	virtual ~CommunicationManager();
 
 	void initialization();
@@ -21,4 +25,5 @@ public:
 	bool selfTest();
 
 };
+}
 }

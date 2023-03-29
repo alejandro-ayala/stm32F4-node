@@ -3,11 +3,13 @@
 #include "../ClockSyncronization/SharedClockSlaveManager.h"
 #include "Communication/CanIDs.h"
 #include "ClockSyncronization/CanSyncMessages.h"
-using namespace Communication;
 
+namespace Components
+{
+using namespace Communication;
 namespace ClockSyncronization
 {
-SharedClockSlaveManager::SharedClockSlaveManager(TimeController* timecontroller, Communication::ICommunication* icomm) : timeController(timecontroller), canController(icomm)
+SharedClockSlaveManager::SharedClockSlaveManager(TimeController* timecontroller, Controllers::CanController* cancontroller) : timeController(timecontroller), canController(cancontroller)
 {
 
 }
@@ -72,10 +74,10 @@ bool SharedClockSlaveManager::getGlobalTime()
 		}
 		else
 		{
-			xil_printf("\r\nWrong MSG: size = %d\r\n", msgSize);
+			std::cout << "Wrong MSG: size = " << msgSize <<std::endl;
 			for(int i=0;i<msgSize;i++)
 			{
-				xil_printf(" %02x,",data[i]);
+				std::cout << data[i] << ",";
 			}
 			updatedTime = false;
 		}
@@ -89,5 +91,6 @@ bool SharedClockSlaveManager::getGlobalTime()
 TimeStamp SharedClockSlaveManager::getTimeReference() const
 {
 	return globalTimeStamp;
+}
 }
 }

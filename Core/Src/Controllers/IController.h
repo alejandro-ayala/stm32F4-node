@@ -1,7 +1,8 @@
 
 #pragma once
-#include "../../include/Definitions.h"
-namespace Hardware
+#include "Definitions.h"
+
+namespace Controllers
 {
 class IController {
 public:

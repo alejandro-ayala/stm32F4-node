@@ -1,21 +1,23 @@
-#include "IMUController.h"
+#include "IMUMng.h"
 #include <math.h>
-namespace Hardware
-{
 
-IMUController::IMUController() : IController("IMUController")
+namespace Components
 {
-	spiControl  = new SPIController();
-	gpioControl = new GpioController();
+namespace ImuManager
+{
+IMUMng::IMUMng()
+{
+	spiControl  = new Controllers::SPIController();
+	gpioControl = new Controllers::GpioController();
 }
 
-IMUController::~IMUController()
+IMUMng::~IMUMng()
 {
 	delete spiControl;
 	delete gpioControl;
 }
 
-void IMUController::initialize()
+void IMUMng::initialize()
 {
 	/*To transmit data in SPI follow the next steps: */
 	// 1. Bring slave select to low
@@ -40,7 +42,7 @@ void IMUController::initialize()
 	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET);
 }
 
-void IMUController::readValue()
+void IMUMng::readValue()
 {
 	uint8_t ix1 = spiControl->readRegister(0x28);//SPI_Read (0x28);
 	uint8_t ix2 = spiControl->readRegister(0x29);
@@ -64,8 +66,9 @@ void IMUController::readValue()
 	currentRotY = - atan2(x, sqrt(y*y+z*z)) * 180.0/3.1416;
 }
 
-bool IMUController::selfTest()
+bool IMUMng::selfTest()
 {
 	return true;
+}
 }
 }

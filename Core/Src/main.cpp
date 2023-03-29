@@ -23,10 +23,13 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Communication/CommunicationManager.h"
-#include "HW/IMUController.h"
+#include "IMUMng/IMUMng.h"
 /* USER CODE END Includes */
-using namespace Communication;
-using namespace Hardware;
+//using namespace Controllers;
+//using namespace Components;
+//using namespace Communication;
+
+
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
@@ -86,8 +89,12 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  static CommunicationManager* commMng = new CommunicationManager();
-  static IMUController*        imuControl = new IMUController();
+
+  static Components::Communication::CommunicationManager *commMng ;//=
+			//new Components::Communication::CommunicationManager();
+
+  static Components::ImuManager::IMUMng *imuControl =
+			new Components::ImuManager::IMUMng();
   /* USER CODE END Init */
 
   /* Configure the system clock */

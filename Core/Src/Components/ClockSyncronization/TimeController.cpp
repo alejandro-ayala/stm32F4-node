@@ -1,7 +1,10 @@
 #include "../ClockSyncronization/TimeController.h"
 
 
-using namespace Hardware;
+using namespace Controllers;
+
+namespace Components
+{
 namespace ClockSyncronization
 {
 TimeController::TimeController() : IController("TimeController")
@@ -90,5 +93,6 @@ bool TimeController::selfTest()
 
 	}
 
+}
 }
 }

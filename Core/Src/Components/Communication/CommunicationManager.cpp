@@ -1,15 +1,17 @@
 
 #include "CommunicationManager.h"
-#include "CanController.h"
 #include "CanIDs.h"
 #include "IData.h"
 #include <iostream>
-using namespace ClockSyncronization;
 
+#include "../Controllers/CAN/CanController.h"
+
+namespace Components
+{
+using namespace ClockSyncronization;
 namespace Communication
 {
-
-CommunicationManager::CommunicationManager(TimeController* timecontroller, Communication::ICommunication* icomm)  : timeController(timecontroller), canController(icomm)
+CommunicationManager::CommunicationManager(TimeController* timecontroller, Controllers::CanController* cancontroller)  : timeController(timecontroller), canController(cancontroller)
 {
 }
 
@@ -55,5 +57,6 @@ bool CommunicationManager::selfTest()
 	bool result = canController->selfTest();
 
 	return result;
+}
 }
 }

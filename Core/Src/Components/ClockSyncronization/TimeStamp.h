@@ -1,5 +1,9 @@
 #pragma once
 
+namespace Components
+{
+namespace ClockSyncronization
+{
 typedef struct
 {
 	cstring  utcDateTime;
@@ -25,3 +29,6 @@ typedef struct
 		return (seconds * 1e9) + nanoseconds;
 	}
 } TimeStamp;
+
+}
+}

@@ -1,12 +1,11 @@
 #pragma once
 #include "stm32f4xx_hal.h"
-#include "../Communication/ICommunication.h"
-#include "IController.h"
 
+#include "Controllers/IController.h"
 
-namespace Communication
+namespace Controllers
 {
-class CanController : public ICommunication
+class CanController : public IController
 {
 private:
 	CAN_HandleTypeDef _hcan1;
@@ -21,8 +20,8 @@ public:
 	virtual ~CanController();
 
 	virtual void initialize() override;
-	int transmitMsg(uint8_t idMsg, uint8_t *TxMsg, uint8_t msgLength) override;
-	int receiveMsg(uint8_t *rxBuffer) override;
+	int transmitMsg(uint8_t idMsg, uint8_t *TxMsg, uint8_t msgLength);
+	int receiveMsg(uint8_t *rxBuffer);
 	bool selfTest() override;
 };
 }

@@ -1,6 +1,6 @@
-#include "AdcController.h"
+#include "../../Controllers/ADC/AdcController.h"
 
-namespace Hardware
+namespace Controllers
 {
 
 AdcController::AdcController() : IController("AdcController")

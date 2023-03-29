@@ -1,8 +1,9 @@
 #pragma once
 #include "stm32f4xx_hal.h"
-#include "IController.h"
 
-namespace Hardware
+#include "../../Controllers/IController.h"
+
+namespace Controllers
 {
 class AdcController : public IController
 {

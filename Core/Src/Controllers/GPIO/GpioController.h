@@ -1,9 +1,9 @@
 #pragma once
 
-#include "IController.h"
+#include "Controllers/IController.h"
+#include "stdio.h"
 
-
-namespace Hardware
+namespace Controllers
 {
 class GpioController : public IController
 {

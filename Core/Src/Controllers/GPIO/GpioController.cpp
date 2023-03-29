@@ -1,7 +1,8 @@
-#include "stm32f4xx_hal.h"
-#include "GpioController.h"
+#include "../../Controllers/GPIO/GpioController.h"
 
-namespace Hardware
+#include "stm32f4xx_hal.h"
+
+namespace Controllers
 {
 
 GpioController::GpioController() : IController("GpioController")

@@ -1,10 +1,9 @@
-#include "CanController.h"
+#include "../../Controllers/CAN/CanController.h"
 
-using namespace Hardware;
-namespace Communication
+namespace Controllers
 {
 
-CanController::CanController() : ICommunication("CanController")
+CanController::CanController() : IController("CanController")
 {
 
 }
