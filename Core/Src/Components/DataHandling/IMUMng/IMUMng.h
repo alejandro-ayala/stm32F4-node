@@ -1,15 +1,14 @@
 #pragma once
 #include "stm32f4xx_hal.h"
 
-#include "../../Controllers/GPIO/GpioController.h"
-#include "../../Controllers/IController.h"
-#include "../../Controllers/SPI/SPIController.h"
+#include "Controllers/GPIO/GpioController.h"
+#include "Controllers/IController.h"
+#include "Controllers/SPI/SPIController.h"
 
 namespace Components
 {
-namespace ImuManager
+namespace DataHandling
 {
-
 class IMUMng
 {
 private:

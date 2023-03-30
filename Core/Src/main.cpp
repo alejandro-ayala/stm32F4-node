@@ -17,15 +17,14 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-#include "cmsis_os.h"
 
+#include "Application/SystemTasks.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Communication/CommunicationManager.h"
-#include "IMUMng/IMUMng.h"
+#include "DataHandling/IMUMng/IMUMng.h"
 /* USER CODE END Includes */
-//using namespace Controllers;
+using namespace Application::DataHandling;
 //using namespace Components;
 //using namespace Communication;
 
@@ -61,9 +60,6 @@ osMutexId mutex1Handle;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 
-void readSensors(void const * argument);
-void sendData(void const * argument);
-
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -93,8 +89,8 @@ int main(void)
   static Components::Communication::CommunicationManager *commMng ;//=
 			//new Components::Communication::CommunicationManager();
 
-  static Components::ImuManager::IMUMng *imuControl =
-			new Components::ImuManager::IMUMng();
+  static Components::DataHandling::IMUMng *imuControl =
+			new Components::DataHandling::IMUMng();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -203,36 +199,6 @@ void SystemClock_Config(void)
   }
 }
 
-
-/* USER CODE BEGIN Header_StartTarea1 */
-/**
-  * @brief  Function implementing the Tarea1 thread.
-  * @param  argument: Not used
-  * @retval None
-  */
-/* USER CODE END Header_StartTarea1 */
-void readSensors(void const * argument)
-{
-  /* USER CODE BEGIN 5 */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END 5 */
-}
-
-
-void sendData(void const * argument)
-{
-  /* USER CODE BEGIN 5 */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END 5 */
-}
 /**
   * @brief  Period elapsed callback in non blocking mode
   * @note   This function is called  when TIM1 interrupt took place, inside

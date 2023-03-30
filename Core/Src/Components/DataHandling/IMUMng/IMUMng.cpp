@@ -3,7 +3,7 @@
 
 namespace Components
 {
-namespace ImuManager
+namespace DataHandling
 {
 IMUMng::IMUMng()
 {
