@@ -1,6 +1,6 @@
 #include "CameraMng.h"
 
-namespace Components
+namespace business_logic
 {
 namespace DataHandling
 {
