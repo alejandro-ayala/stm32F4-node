@@ -20,7 +20,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <business_logic/Osal/SystemTasks.h>
+#include "../application/include/SystemTasks.h"
 #include "business_logic/Communication/CommunicationManager.h"
 #include "business_logic/DataHandling/DataHandling.h"
 /* USER CODE END Includes */
