@@ -13,10 +13,10 @@ class CommunicationManager
 {
 private:
 	ClockSyncronization::TimeController* timeController;
-	Controllers::CanController*          canController;
+	hardware_abstraction::Controllers::CanController*          canController;
 	ClockSyncronization::TimeStamp       globalTimeStamp;
 public:
-	CommunicationManager(ClockSyncronization::TimeController* timecontroller, Controllers::CanController* canController);
+	CommunicationManager(ClockSyncronization::TimeController* timecontroller, hardware_abstraction::Controllers::CanController* canController);
 	virtual ~CommunicationManager();
 
 	void initialization();

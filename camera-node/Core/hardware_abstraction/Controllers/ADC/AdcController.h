@@ -3,6 +3,8 @@
 
 #include "../IController.h"
 
+namespace hardware_abstraction
+{
 namespace Controllers
 {
 class AdcController : public IController
@@ -18,4 +20,5 @@ public:
 
 	bool selfTest() override;
 };
+}
 }

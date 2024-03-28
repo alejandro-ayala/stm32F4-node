@@ -2,6 +2,8 @@
 
 #include "stm32f4xx_hal.h"
 
+namespace hardware_abstraction
+{
 namespace Controllers
 {
 
@@ -99,5 +101,6 @@ uint8_t GpioController::readPin(uint16_t port, uint16_t pin)
 bool GpioController::selfTest()
 {
 	return true;
+}
 }
 }

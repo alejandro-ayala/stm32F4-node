@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IMUMng/IMUMng.h"
-#include "CameraMng/CameraMng.h"
+//#include "CameraMng/CameraMng.h"
 
 namespace business_logic
 {

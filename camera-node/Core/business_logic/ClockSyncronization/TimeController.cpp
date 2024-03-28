@@ -1,7 +1,7 @@
 #include "../ClockSyncronization/TimeController.h"
 
 
-using namespace Controllers;
+using namespace hardware_abstraction::Controllers;
 namespace business_logic
 {
 namespace ClockSyncronization

@@ -12,8 +12,8 @@ namespace DataHandling
 class IMUMng
 {
 private:
-	Controllers::SPIController*  spiControl;
-	Controllers::GpioController* gpioControl;
+	hardware_abstraction::Controllers::SPIController*  spiControl;
+	hardware_abstraction::Controllers::GpioController* gpioControl;
 	SPI_HandleTypeDef hspi1;
 	double currentRotX;
 	double currentRotY;

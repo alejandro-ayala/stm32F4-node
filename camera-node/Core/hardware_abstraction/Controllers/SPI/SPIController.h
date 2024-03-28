@@ -3,6 +3,8 @@
 
 #include "../IController.h"
 
+namespace hardware_abstraction
+{
 namespace Controllers
 {
 class SPIController : public IController
@@ -20,4 +22,5 @@ public:
 	void writeRegister(uint8_t address, uint8_t data);
 	bool selfTest() override;
 };
+}
 }

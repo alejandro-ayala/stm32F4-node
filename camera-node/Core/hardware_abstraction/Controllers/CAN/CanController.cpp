@@ -1,5 +1,7 @@
 #include "CanController.h"
 
+namespace hardware_abstraction
+{
 namespace Controllers
 {
 
@@ -66,5 +68,6 @@ int CanController::receiveMsg(uint8_t *rxBuffer)
 bool CanController::selfTest()
 {
 	return true;
+}
 }
 }

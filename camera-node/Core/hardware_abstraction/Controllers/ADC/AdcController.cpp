@@ -1,5 +1,7 @@
 #include "AdcController.h"
 
+namespace hardware_abstraction
+{
 namespace Controllers
 {
 
@@ -58,5 +60,6 @@ void AdcController::initialize()
 bool AdcController::selfTest()
 {
 	return true;
+}
 }
 }

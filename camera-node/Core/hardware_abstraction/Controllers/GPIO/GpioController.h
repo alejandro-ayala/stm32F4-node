@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include "../IController.h"
 
+namespace hardware_abstraction
+{
 namespace Controllers
 {
 class GpioController : public IController
@@ -21,4 +23,5 @@ public:
 	uint8_t readPin(uint16_t port, uint16_t gpio);
 	bool selfTest() override;
 };
+}
 }

@@ -2,6 +2,8 @@
 #include "services/Exception/SystemExceptions.h"
 #include <string.h>
 
+namespace hardware_abstraction
+{
 namespace Controllers
 {
 
@@ -52,5 +54,6 @@ void UARTController::send(const std::string& command)
 bool UARTController::selfTest()
 {
 	return true;
+}
 }
 }

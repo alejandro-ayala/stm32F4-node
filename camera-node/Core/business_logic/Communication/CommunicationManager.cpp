@@ -11,7 +11,7 @@ namespace business_logic
 using namespace ClockSyncronization;
 namespace Communication
 {
-CommunicationManager::CommunicationManager(TimeController* timecontroller, Controllers::CanController* cancontroller)  : timeController(timecontroller), canController(cancontroller)
+CommunicationManager::CommunicationManager(TimeController* timecontroller, hardware_abstraction::Controllers::CanController* cancontroller)  : timeController(timecontroller), canController(cancontroller)
 {
 }
 

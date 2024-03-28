@@ -3,6 +3,8 @@
 
 #include "../IController.h"
 
+namespace hardware_abstraction
+{
 namespace Controllers
 {
 class CanController : public IController
@@ -24,4 +26,5 @@ public:
 	int receiveMsg(uint8_t *rxBuffer);
 	bool selfTest() override;
 };
+}
 }

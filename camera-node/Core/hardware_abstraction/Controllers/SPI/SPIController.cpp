@@ -1,5 +1,7 @@
 #include "SPIController.h"
 
+namespace hardware_abstraction
+{
 namespace Controllers
 {
 
@@ -67,5 +69,6 @@ void SPIController::writeRegister(uint8_t address, uint8_t data)
 bool SPIController::selfTest()
 {
 	return true;
+}
 }
 }

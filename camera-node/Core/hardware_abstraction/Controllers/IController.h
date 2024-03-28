@@ -2,6 +2,8 @@
 #pragma once
 #include "Definitions.h"
 
+namespace hardware_abstraction
+{
 namespace Controllers
 {
 class IController {
@@ -15,4 +17,5 @@ public:
 	virtual void initialize() = 0;
 	virtual bool selfTest()   = 0;
 };
+}
 }

@@ -29,7 +29,7 @@ void Logger::initialize()
 	sinkCff.Init.Mode         = UART_MODE_TX_RX;
 	sinkCff.Init.OverSampling = UART_OVERSAMPLING_16;
 
-	outSink = std::make_unique<Controllers::UARTController>(Controllers::UARTController(&sinkCff));
+	outSink = std::make_unique<hardware_abstraction::Controllers::UARTController>(hardware_abstraction::Controllers::UARTController(&sinkCff));
 	outSink->initialize();
 }
 

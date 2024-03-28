@@ -10,7 +10,7 @@ namespace business_logic
 {
 namespace ClockSyncronization
 {
-class TimeController : public Controllers::IController
+class TimeController : public hardware_abstraction::Controllers::IController
 {
 private:
 	ITimer* internalTimer;

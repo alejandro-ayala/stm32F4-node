@@ -18,7 +18,7 @@ private:
 
 	virtual void initialize();
 
-	std::unique_ptr<Controllers::UARTController> outSink;
+	std::unique_ptr<hardware_abstraction::Controllers::UARTController> outSink;
 	LogLevel m_logLevel;
 	bool m_disable;
 

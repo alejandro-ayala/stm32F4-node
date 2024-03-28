@@ -7,8 +7,8 @@ namespace DataHandling
 {
 IMUMng::IMUMng()
 {
-	spiControl  = new Controllers::SPIController();
-	gpioControl = new Controllers::GpioController();
+	spiControl  = new hardware_abstraction::Controllers::SPIController();
+	gpioControl = new hardware_abstraction::Controllers::GpioController();
 }
 
 IMUMng::~IMUMng()

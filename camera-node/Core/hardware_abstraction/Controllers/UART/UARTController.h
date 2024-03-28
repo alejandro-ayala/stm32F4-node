@@ -4,6 +4,8 @@
 #include "../IController.h"
 #include "../ICommunication.h"
 
+namespace hardware_abstraction
+{
 namespace Controllers
 {
 class UARTController : public ICommunication
@@ -21,4 +23,5 @@ public:
 	void receive(std::string& response, uint32_t waitResponse = 2000)   override;
 	bool selfTest()                       override;
 };
+}
 }
