@@ -12,6 +12,6 @@
 
 #define THROW_CONTROLLERS_EXCEPTION(exceptionId, msg) throw services::ControllersException(exceptionId, std::string(msg));
 #define THROW_DEVICES_EXCEPTION(exceptionId, msg) throw services::DevicesException(exceptionId, std::string(msg));
-#define THROW_BUSINESS_LOGIC_EXCEPTION(exceptionId, msg) throw services::AplicationException(exceptionId, std::string(msg));
+#define THROW_BUSINESS_LOGIC_EXCEPTION(exceptionId, msg) throw services::BusinessLogicException(exceptionId, std::string(msg));
 #define THROW_SERVICES_EXCEPTION(exceptionId, msg) throw services::ServicesException(exceptionId, std::string(msg));
 

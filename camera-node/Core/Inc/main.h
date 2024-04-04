@@ -23,6 +23,9 @@
 #define __MAIN_H
 
 #ifdef __cplusplus
+#include "hardware_abstraction/Devices/ICameraDevice.h"
+#include <memory>
+static std::shared_ptr<hardware_abstraction::Devices::ICameraDevice>  cameraController;
 extern "C" {
 #endif
 

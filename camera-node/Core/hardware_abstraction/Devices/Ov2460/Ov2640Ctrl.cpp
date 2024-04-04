@@ -10,6 +10,11 @@ namespace hardware_abstraction
 namespace Devices
 {
 
+void HAL_DCMI_FrameEventCallback(DCMI_HandleTypeDef *hdcmi)
+{
+	cameraController->stopCapture();
+}
+
 short Ov2640Ctrl::SCCB_Write(uint8_t reg_addr, uint8_t data) {
 	short opertionStatus = 0;
 	uint8_t buffer[2] = { 0 };
@@ -51,6 +56,7 @@ short Ov2640Ctrl::SCCB_Read(uint8_t reg_addr, uint8_t *pdata) {
 
 Ov2640Ctrl::Ov2640Ctrl(CameraCfg cfg) : m_hdcmi(cfg.hdcmi), m_hdma_dcmi(cfg.hdma_dcmi), m_hi2c2(cfg.hi2c2)
 {
+	m_isCapturingFrame = false;
 
 }
 
@@ -74,7 +80,7 @@ void Ov2640Ctrl::initialization()
 	std::cout << "Camera PID:" << pid << " version: " << ver << std::endl;
 
 	// Stop DCMI clear buffer
-	HAL_DCMI_Stop(&m_hdcmi);
+	stopCapture();
 	HAL_Delay(10); //TODO check if needed
 }
 
@@ -87,7 +93,7 @@ void Ov2640Ctrl::setRegistersConfiguration(const std::vector<std::pair<uint8_t, 
 		HAL_Delay(10);
 		uint8_t newRegVal;
 		SCCB_Read(regAddr, &newRegVal);
-		if (regVal != regVal)
+		if (regVal != newRegVal)
 		{
 			std::cout << "SCCB write failure: " << std::to_string(regAddr) << std::to_string(regVal) << std::endl;
 		}
@@ -107,13 +113,11 @@ void Ov2640Ctrl::configuration(CameraResolution resolution)
 	setRegistersConfiguration(OV2640_320x240_JPEG);
 }
 
-void Ov2640Ctrl::captureScreenshot()
+void Ov2640Ctrl::captureSnapshot()
 {
 	std::fill(std::begin(m_frameBuffer), std::end(m_frameBuffer), 0);;
 	HAL_DCMI_Start_DMA(&m_hdcmi, DCMI_MODE_SNAPSHOT, (uint32_t)m_frameBuffer, m_resolutionSize);
-	HAL_Delay(2000);
-	HAL_DCMI_Suspend(&m_hdcmi);
-	HAL_DCMI_Stop(&m_hdcmi);
+	__HAL_DCMI_ENABLE_IT(&m_hdcmi, DCMI_IT_FRAME);
 }
 
 void Ov2640Ctrl::processCapture()
@@ -146,6 +150,11 @@ void Ov2640Ctrl::processCapture()
 	std::cout << "Image size:" << std::to_string(bufferPointer) << " bytes" << std::endl;
 }
 
+bool Ov2640Ctrl::isCapturingFrame() const
+{
+	return m_isCapturingFrame;
+}
+
 void Ov2640Ctrl::decodeCapture()
 {
 
@@ -158,13 +167,25 @@ void Ov2640Ctrl::decodeCapture()
 
 void Ov2640Ctrl::startContinuousCapture()
 {
-
+	std::fill(std::begin(m_frameBuffer), std::end(m_frameBuffer), 0);
+	m_isCapturingFrame = true;
+	HAL_DCMI_Start_DMA(&m_hdcmi, DCMI_MODE_CONTINUOUS, (uint32_t)m_frameBuffer, m_resolutionSize);
 }
 
-void Ov2640Ctrl::stopContinuousCapture()
+void Ov2640Ctrl::stopCapture()
 {
-
+    HAL_DCMI_Suspend(&m_hdcmi);
+    HAL_DCMI_Stop(&m_hdcmi);
+    m_isCapturingFrame = false;
 }
 
+bool Ov2640Ctrl::selfTest()
+{
+	uint8_t pid;
+	uint8_t version;
+	SCCB_Read(0x0a, &pid);  // pid value is 0x26
+	SCCB_Read(0x0b, &version);  // ver value is 0x42
+	return (pid == m_pid && version == m_version);
+}
 }
 }

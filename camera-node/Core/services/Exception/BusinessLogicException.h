@@ -8,7 +8,9 @@ namespace services
 enum BusinessLogicErrorId
 {
     TaskCreationError = ErrorIdOffset::BusinessLogicLayer,
-	DynamicCastError
+	DynamicCastError,
+	QueueIsFull,
+	CameraTimeout
 };
 
 class BusinessLogicException : public BaseException

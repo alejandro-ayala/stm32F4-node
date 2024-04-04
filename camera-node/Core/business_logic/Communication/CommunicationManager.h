@@ -4,7 +4,7 @@
 #include "IData.h"
 #include "../ClockSyncronization/TimeStamp.h"
 #include "../ClockSyncronization/TimeController.h"
-
+#include <memory>
 namespace business_logic
 {
 namespace Communication
@@ -12,11 +12,11 @@ namespace Communication
 class CommunicationManager
 {
 private:
-	ClockSyncronization::TimeController* timeController;
-	hardware_abstraction::Controllers::CanController*          canController;
+	std::shared_ptr<ClockSyncronization::TimeController>                timeController;
+	std::shared_ptr<hardware_abstraction::Controllers::CanController>    canController;
 	ClockSyncronization::TimeStamp       globalTimeStamp;
 public:
-	CommunicationManager(ClockSyncronization::TimeController* timecontroller, hardware_abstraction::Controllers::CanController* canController);
+	CommunicationManager(std::shared_ptr<ClockSyncronization::TimeController> timecontroller, std::shared_ptr<hardware_abstraction::Controllers::CanController> cancontroller);
 	virtual ~CommunicationManager();
 
 	void initialization();

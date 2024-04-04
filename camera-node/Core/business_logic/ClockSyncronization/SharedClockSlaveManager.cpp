@@ -9,7 +9,7 @@ namespace business_logic
 using namespace Communication;
 namespace ClockSyncronization
 {
-SharedClockSlaveManager::SharedClockSlaveManager(TimeController* timecontroller, hardware_abstraction::Controllers::CanController* cancontroller) : timeController(timecontroller), canController(cancontroller)
+SharedClockSlaveManager::SharedClockSlaveManager(std::shared_ptr<TimeController> timecontroller, std::shared_ptr<hardware_abstraction::Controllers::CanController> cancontroller) : timeController(timecontroller), canController(cancontroller)
 {
 
 }

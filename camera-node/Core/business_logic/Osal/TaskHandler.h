@@ -11,7 +11,6 @@ namespace Osal
 using TaskFunction = void (*)(void*);
 using VoidPtr = void*;
 
-
 class TaskHandler
 {
 private:
