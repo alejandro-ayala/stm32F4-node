@@ -117,7 +117,10 @@ void Ov2640Ctrl::captureSnapshot()
 {
 	std::fill(std::begin(m_frameBuffer), std::end(m_frameBuffer), 0);;
 	HAL_DCMI_Start_DMA(&m_hdcmi, DCMI_MODE_SNAPSHOT, (uint32_t)m_frameBuffer, m_resolutionSize);
-	__HAL_DCMI_ENABLE_IT(&m_hdcmi, DCMI_IT_FRAME);
+	//__HAL_DCMI_ENABLE_IT(&m_hdcmi, DCMI_IT_FRAME);
+	HAL_Delay(2000);
+	HAL_DCMI_Suspend(&m_hdcmi);
+	HAL_DCMI_Stop(&m_hdcmi);
 }
 
 void Ov2640Ctrl::processCapture()

@@ -1,8 +1,8 @@
 #include "../include/SystemTasks.h"
+#include <iostream>
 
 namespace application
 {
-
 SystemTasks::SystemTasks(const std::shared_ptr<business_logic::Communication::CommunicationManager>& commMng, const std::shared_ptr<business_logic::DataHandling::ImageCapturer>& imageCapturer, const std::shared_ptr<business_logic::ClockSyncronization::SharedClockSlaveManager>& sharedClkMng)
 {
 	createPoolTasks(commMng, imageCapturer, sharedClkMng);
@@ -34,23 +34,33 @@ void SystemTasks::captureImage(void* argument)
 
 void SystemTasks::sendData(void* argument)
 {
-  /* USER CODE BEGIN 5 */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END 5 */
+	auto commMng = std::make_shared<business_logic::Communication::CommunicationManager>(*static_cast<business_logic::Communication::CommunicationManager*>(argument));
+
+	const auto sendDataPeriod = 200;
+
+	/* USER CODE BEGIN 5 */
+	/* Infinite loop */
+	for(;;)
+	{
+		std::cout << "Sending image information to master node" << std::endl;
+		m_commTaskHandler->delayUntil(sendDataPeriod);
+	}
+	/* USER CODE END 5 */
 }
 
 void SystemTasks::syncronizationGlobalClock(void* argument)
 {
-  /* USER CODE BEGIN 5 */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END 5 */
+	auto sharedClkMng = std::make_shared<business_logic::ClockSyncronization::SharedClockSlaveManager>(*static_cast<business_logic::ClockSyncronization::SharedClockSlaveManager*>(argument));
+
+	const auto syncClkPeriod = 500;
+
+	/* USER CODE BEGIN 5 */
+	/* Infinite loop */
+	for(;;)
+	{
+		std::cout << "Sync clk" << std::endl;
+		m_clockSyncTaskHandler->delayUntil(syncClkPeriod);
+	}
+	/* USER CODE END 5 */
 }
 }

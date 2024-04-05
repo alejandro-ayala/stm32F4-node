@@ -162,8 +162,8 @@ int main(void)
 
   /* Create the mutex(es) */
   /* definition and creation of mutex1 */
-  osMutexDef(mutex1);
-  mutex1Handle = osMutexCreate(osMutex(mutex1));
+//  osMutexDef(mutex1);
+//  mutex1Handle = osMutexCreate(osMutex(mutex1));
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */

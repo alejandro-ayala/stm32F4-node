@@ -15,7 +15,7 @@ class TaskHandler
 {
 private:
 	TaskHandle_t m_task;
-	static const uint32_t StackSize{2048};
+	static const uint32_t StackSize{512};
 
 public:
 
