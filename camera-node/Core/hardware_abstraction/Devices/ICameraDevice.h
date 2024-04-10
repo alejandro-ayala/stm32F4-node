@@ -35,7 +35,7 @@ public:
 	virtual void captureSnapshot() = 0;
 	virtual void startContinuousCapture() = 0;
 	virtual void stopCapture() = 0;
-	virtual void processCapture() = 0;
+	virtual uint32_t processCapture(uint8_t* &bufferPtr) = 0;
 	virtual bool isCapturingFrame() const = 0;
 };
 }

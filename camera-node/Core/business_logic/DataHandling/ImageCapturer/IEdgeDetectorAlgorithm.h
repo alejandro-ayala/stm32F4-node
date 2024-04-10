@@ -1,8 +1,11 @@
 #pragma once
 #include <cstdint>
 #include <vector>
+#include <array>
+constexpr uint32_t imgWidth = 32;
+constexpr uint32_t imgHeight = 24;
 class IEdgeDetectorAlgorithm
 {
 public:
-    virtual std::vector<std::vector<double>> process(const std::vector<std::vector<uint8_t>> &image) = 0;
+    virtual void process(const uint8_t* const bufferAddr,double* * edges) = 0;
 };

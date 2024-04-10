@@ -7,7 +7,7 @@ namespace hardware_abstraction
 {
 namespace Devices
 {
-constexpr uint32_t maxBufferSize = 65535;
+constexpr uint32_t maxBufferSize = 5500;
 
 class Ov2640Ctrl : public ICameraDevice
 {
@@ -38,7 +38,7 @@ public:
 	void startContinuousCapture() final;
 	void stopCapture() final;
 	bool isCapturingFrame() const final;
-	void processCapture();
+	uint32_t processCapture(uint8_t* &bufferPtr);
 	void decodeCapture();
 	bool selfTest() final;
 };

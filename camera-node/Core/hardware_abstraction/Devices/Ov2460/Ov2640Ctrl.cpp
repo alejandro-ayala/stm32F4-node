@@ -5,6 +5,7 @@
 #include <string.h>
 #include <vector>
 #include "main.h"
+
 namespace hardware_abstraction
 {
 namespace Devices
@@ -12,7 +13,10 @@ namespace Devices
 
 void HAL_DCMI_FrameEventCallback(DCMI_HandleTypeDef *hdcmi)
 {
-	cameraController->stopCapture();
+	int a = 0;
+	a+4;
+
+	//cameraController->stopCapture();
 }
 
 short Ov2640Ctrl::SCCB_Write(uint8_t reg_addr, uint8_t data) {
@@ -118,15 +122,16 @@ void Ov2640Ctrl::captureSnapshot()
 	std::fill(std::begin(m_frameBuffer), std::end(m_frameBuffer), 0);;
 	HAL_DCMI_Start_DMA(&m_hdcmi, DCMI_MODE_SNAPSHOT, (uint32_t)m_frameBuffer, m_resolutionSize);
 	//__HAL_DCMI_ENABLE_IT(&m_hdcmi, DCMI_IT_FRAME);
-	HAL_Delay(2000);
+	HAL_Delay(6000);
 	HAL_DCMI_Suspend(&m_hdcmi);
 	HAL_DCMI_Stop(&m_hdcmi);
 }
 
-void Ov2640Ctrl::processCapture()
+uint32_t Ov2640Ctrl::processCapture(uint8_t* &bufferPtr)
 {
 	uint32_t bufferPointer = 0;
 	bool headerFound;
+	bufferPtr = m_frameBuffer;
 
 	while (1)
 	{
@@ -142,15 +147,22 @@ void Ov2640Ctrl::processCapture()
 			bufferPointer = bufferPointer + 2;
 			std::cout << "Found EOI of JPEG file" << std::endl;
 			headerFound = false;
+
 			break;
 		}
 		if (bufferPointer >= maxBufferSize)
 		{
+			bufferPtr = nullptr;
 			break;
 		}
 		bufferPointer++;
 	}
 	std::cout << "Image size:" << std::to_string(bufferPointer) << " bytes" << std::endl;
+//	const size_t imgSize = bufferPointer;
+//	std::vector<uint8_t> rawImg;
+//	rawImg.resize(imgSize);
+//    std::copy(std::begin(m_frameBuffer), std::begin(m_frameBuffer) + imgSize, rawImg.begin());
+    return bufferPointer;
 }
 
 bool Ov2640Ctrl::isCapturingFrame() const

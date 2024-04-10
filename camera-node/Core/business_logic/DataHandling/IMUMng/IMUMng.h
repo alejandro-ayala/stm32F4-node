@@ -20,7 +20,6 @@ private:
 	uint8_t spiTxBuf[2];
 	uint8_t spiRxBuf[2];
 	int deviceId;
-
 public:
 	IMUMng();
 	virtual ~IMUMng();
