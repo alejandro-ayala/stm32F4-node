@@ -2,7 +2,7 @@
 #include <memory>
 #include <sstream>
 #include <string>
-#include "stm32f4xx_hal.h"
+#include "stm32h7xx_hal.h"
 #include "../../hardware_abstraction/Controllers/UART/UARTController.h"
 #include "ILogger.h"
 

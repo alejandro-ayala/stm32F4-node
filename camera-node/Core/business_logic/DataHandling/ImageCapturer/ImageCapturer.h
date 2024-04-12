@@ -24,7 +24,6 @@ private:
 	std::shared_ptr<business_logic::Osal::QueueHandler> m_capturesQueue;
 	std::shared_ptr<EdgeDetector> m_edgeDetector;
 	std::array<std::array<uint8_t, imgWidth>, imgHeight> arrangeBuffer(const unsigned char *image);
-	double** m_edges;
 	uint8_t* m_pic;
 	ImageStateHandle imageState;
 
@@ -37,6 +36,7 @@ public:
 	void captureImage();
 	void extractImage();
 	void decodeJPEG(uint8_t *image_buffer, uint16_t buffer_length,uint8_t greyscale);
+	void encodeJPEG(uint8_t **image_buffer, unsigned long *image_size, uint8_t image_quality);
 };
 }
 }

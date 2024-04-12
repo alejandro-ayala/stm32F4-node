@@ -17,47 +17,54 @@ CanController::~CanController()
 
 void CanController::initialize()
 {
-	_hcan1.Instance = CAN1;
-	_hcan1.Init.Prescaler = 21;
-	_hcan1.Init.Mode = CAN_MODE_NORMAL;
-	_hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
-	_hcan1.Init.TimeSeg1 = CAN_BS1_12TQ;
-	_hcan1.Init.TimeSeg2 = CAN_BS2_4TQ;
-	_hcan1.Init.TimeTriggeredMode = DISABLE;
-	_hcan1.Init.AutoBusOff = DISABLE;
-	_hcan1.Init.AutoWakeUp = DISABLE;
-	_hcan1.Init.AutoRetransmission = DISABLE;
-	_hcan1.Init.ReceiveFifoLocked = DISABLE;
-	_hcan1.Init.TransmitFifoPriority = DISABLE;
-	if (HAL_CAN_Init(&_hcan1) != HAL_OK)
-	{
-		//Error_Handler();
-	}
+	  /* USER CODE BEGIN FDCAN1_Init 0 */
 
-	pHeader.DLC=1; //give message size of 1 byte
-	pHeader.IDE=CAN_ID_STD; //set identifier to standard
-	pHeader.RTR=CAN_RTR_DATA; //set data type to remote transmission request?
-	pHeader.StdId=0x2F4; //define a standard identifier, used for message identification by filters (##switch this for the other microcontroller##)
+	  /* USER CODE END FDCAN1_Init 0 */
 
-	//filter one (stack light blink)
-	sFilterConfig.FilterFIFOAssignment=CAN_FILTER_FIFO0; //set fifo assignment
-	sFilterConfig.FilterIdHigh=0x2FF<<5; //the ID that the filter looks for (##switch this for the other microcontroller##)
-	sFilterConfig.FilterIdLow=0;
-	sFilterConfig.FilterMaskIdHigh=0;
-	sFilterConfig.FilterMaskIdLow=0;
-	sFilterConfig.FilterScale=CAN_FILTERSCALE_32BIT; //set filter scale
-	sFilterConfig.FilterActivation=ENABLE;
+	  /* USER CODE BEGIN FDCAN1_Init 1 */
 
-	HAL_CAN_ConfigFilter(&_hcan1, &sFilterConfig); //configure CAN filter
+	  /* USER CODE END FDCAN1_Init 1 */
+	  hfdcan1.Instance = FDCAN1;
+	  hfdcan1.Init.FrameFormat = FDCAN_FRAME_CLASSIC;
+	  hfdcan1.Init.Mode = FDCAN_MODE_NORMAL;
+	  hfdcan1.Init.AutoRetransmission = DISABLE;
+	  hfdcan1.Init.TransmitPause = DISABLE;
+	  hfdcan1.Init.ProtocolException = DISABLE;
+	  hfdcan1.Init.NominalPrescaler = 16;
+	  hfdcan1.Init.NominalSyncJumpWidth = 1;
+	  hfdcan1.Init.NominalTimeSeg1 = 2;
+	  hfdcan1.Init.NominalTimeSeg2 = 2;
+	  hfdcan1.Init.DataPrescaler = 1;
+	  hfdcan1.Init.DataSyncJumpWidth = 1;
+	  hfdcan1.Init.DataTimeSeg1 = 1;
+	  hfdcan1.Init.DataTimeSeg2 = 1;
+	  hfdcan1.Init.MessageRAMOffset = 0;
+	  hfdcan1.Init.StdFiltersNbr = 0;
+	  hfdcan1.Init.ExtFiltersNbr = 0;
+	  hfdcan1.Init.RxFifo0ElmtsNbr = 0;
+	  hfdcan1.Init.RxFifo0ElmtSize = FDCAN_DATA_BYTES_8;
+	  hfdcan1.Init.RxFifo1ElmtsNbr = 0;
+	  hfdcan1.Init.RxFifo1ElmtSize = FDCAN_DATA_BYTES_8;
+	  hfdcan1.Init.RxBuffersNbr = 0;
+	  hfdcan1.Init.RxBufferSize = FDCAN_DATA_BYTES_8;
+	  hfdcan1.Init.TxEventsNbr = 0;
+	  hfdcan1.Init.TxBuffersNbr = 0;
+	  hfdcan1.Init.TxFifoQueueElmtsNbr = 0;
+	  hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
+	  hfdcan1.Init.TxElmtSize = FDCAN_DATA_BYTES_8;
+	  if (HAL_FDCAN_Init(&hfdcan1) != HAL_OK)
+	  {
+	    //Error_Handler();
+	  }
+	  /* USER CODE BEGIN FDCAN1_Init 2 */
 
-	HAL_CAN_Start(&_hcan1); //start CAN
-	HAL_CAN_ActivateNotification(&_hcan1, CAN_IT_RX_FIFO0_MSG_PENDING); //enable interrupts
+	  /* USER CODE END FDCAN1_Init 2 */
 }
 
 int CanController::transmitMsg(uint8_t idMsg, uint8_t *TxMsg, uint8_t msgLength)
 {
 
-	HAL_CAN_AddTxMessage(&_hcan1, &pHeader, TxMsg, &TxMailbox);
+	//HAL_CAN_AddTxMessage(&_hcan1, &pHeader, TxMsg, &TxMailbox);
 }
 
 int CanController::receiveMsg(uint8_t *rxBuffer)

@@ -1,4 +1,4 @@
-#include <business_logic/DataHandling/ImageCapturer/ImageCapturer.h>
+#include "ImageCapturer.h"
 #include "services/Exception/SystemExceptions.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "external/stb/stb_image.h"
@@ -15,21 +15,13 @@ ImageCapturer::ImageCapturer(const std::shared_ptr<hardware_abstraction::Devices
 	//m_edges = new double*[imgHeight];
 	m_pic   = new uint8_t[imgWidth * imgHeight];
 
-//	for (uint32_t i = 0; i < imgHeight; ++i)
-//	{
-//		m_edges[i] = new double[imgWidth];
-//	}
 	m_edgeDetector = std::make_shared<EdgeDetector>();
-	BUSINESS_LOGIC_ASSERT( m_capturesQueue->getAvailableSpace() != 0, services::BusinessLogicErrorId::QueueIsFull, "Queue to store the camera images is full");
+	//BUSINESS_LOGIC_ASSERT( m_capturesQueue->getAvailableSpace() != 0, services::BusinessLogicErrorId::QueueIsFull, "Queue to store the camera images is full");
 }
 
 ImageCapturer::~ImageCapturer()
 {
-//    for (uint32_t i = 0; i < imgHeight; ++i)
-//    {
-//        delete[] m_edges[i];
-//    }
-//    delete[] m_edges;
+
     delete[] m_pic;
 }
 
@@ -52,12 +44,15 @@ void ImageCapturer::extractImage()
 	{
 		//unsigned char imageBuffer[320*240];
 		uint8_t* bufferAddr;
-		const auto bufferSize = m_cameraControl->processCapture(bufferAddr);
+		//const auto bufferSize = m_cameraControl->processCapture(bufferAddr);
 
-		decodeJPEG(bufferAddr, bufferSize, 1);
+		//decodeJPEG(bufferAddr, bufferSize, 1);
 
-		//const auto rawImg = arrangeBuffer(rawImgBuffer.data());
-		m_edgeDetector->processImage(m_pic, m_edges);
+		const auto rawImg = arrangeBuffer(m_pic);
+		std::array<std::array<double, imgWidth>, imgHeight> edges;
+		m_edgeDetector->processImage(rawImg, edges);
+		const auto size = edges.size();
+		const auto edgesPtr = edges.data();
 
 
 
@@ -187,5 +182,38 @@ void ImageCapturer::decodeJPEG(uint8_t *image_buffer, uint16_t buffer_length,uin
 	free(row_pointer[0]);
 
 }
+
+void ImageCapturer::encodeJPEG(uint8_t **image_buffer, unsigned long *image_size, uint8_t image_quality)
+{
+	struct jpeg_compress_struct cinfo;
+		struct jpeg_error_mgr jerr;
+		JSAMPROW row_pointer[1];
+		cinfo.err = jpeg_std_error( &jerr );
+		jpeg_create_compress(&cinfo);
+		cinfo.image_width = imageState.image_width;
+		cinfo.image_height = imageState.image_heigh;
+		cinfo.input_components = imageState.image_byte_per_pixel;
+		if(imageState.grayscale==1)
+		{
+			cinfo.in_color_space = JCS_GRAYSCALE;
+		}
+		else
+		{
+			cinfo.in_color_space = JCS_RGB;
+		}
+		jpeg_set_defaults( &cinfo );
+		jpeg_set_quality(&cinfo, image_quality, TRUE );
+			jpeg_mem_dest(&cinfo, image_buffer, image_size);
+		jpeg_start_compress( &cinfo, TRUE );
+		while (cinfo.next_scanline < cinfo.image_height) {
+				row_pointer[0] = &m_pic[cinfo.next_scanline * cinfo.image_width];
+				jpeg_write_scanlines(&cinfo, row_pointer, 1);
+			}
+
+		jpeg_finish_compress( &cinfo );
+		jpeg_destroy_compress( &cinfo );
+		free(m_pic);
+}
+
 }
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "stm32f4xx_hal.h"
+#include "stm32h7xx_hal.h"
 
 #include "../IController.h"
 
@@ -10,10 +10,8 @@ namespace Controllers
 class CanController : public IController
 {
 private:
-	CAN_HandleTypeDef _hcan1;
-	CAN_TxHeaderTypeDef pHeader; //declare a specific header for message transmittions
-	CAN_RxHeaderTypeDef pRxHeader; //declare header for message reception
-	CAN_FilterTypeDef sFilterConfig; //declare CAN filter structure
+	FDCAN_HandleTypeDef hfdcan1;
+
 	uint32_t TxMailbox;
 	int deviceId;
 

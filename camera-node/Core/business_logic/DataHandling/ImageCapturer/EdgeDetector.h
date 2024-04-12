@@ -13,12 +13,12 @@ namespace DataHandling
 class EdgeDetector
 {
 private:
-    std::shared_ptr<IEdgeDetectorAlgorithm> m_detectionEdgeAlgo;
+    std::shared_ptr<SobelEdgeDetectorAlgorithm> m_detectionEdgeAlgo;
 
 public:
-    EdgeDetector(const std::shared_ptr<IEdgeDetectorAlgorithm> &detectionEdgeAlgo = std::make_shared<SobelEdgeDetectorAlgorithm>());
+    EdgeDetector(const std::shared_ptr<SobelEdgeDetectorAlgorithm> &detectionEdgeAlgo = std::make_shared<SobelEdgeDetectorAlgorithm>());
     ~EdgeDetector() = default;
-    void processImage(const uint8_t* const bufferAddr,double* * edges);
+    void processImage(const std::array<std::array<uint8_t, imgWidth>, imgHeight>& rawImage, std::array<std::array<double, imgWidth>, imgHeight>& edges);
 };
 }
 }

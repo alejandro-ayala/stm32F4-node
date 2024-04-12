@@ -26,11 +26,12 @@
 #endif
 
 #include <stdlib.h>
-
+#include <stdint.h>
 
 
 /* Includes ------------------------------------------------------------------*/
 #include "../Middlewares/Third_Party/LibJPEG/include/jpeglib.h"
+ //"jpeglib.h"
 
 /* USER CODE BEGIN 0 */
 /* USER CODE END 0 */

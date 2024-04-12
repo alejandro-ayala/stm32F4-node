@@ -5,7 +5,7 @@ namespace business_logic
 namespace DataHandling
 {
 
-EdgeDetector::EdgeDetector(const std::shared_ptr<IEdgeDetectorAlgorithm> &detectionEdgeAlgo) : m_detectionEdgeAlgo(detectionEdgeAlgo)
+EdgeDetector::EdgeDetector(const std::shared_ptr<SobelEdgeDetectorAlgorithm> &detectionEdgeAlgo) : m_detectionEdgeAlgo(detectionEdgeAlgo)
 {
 //    std::vector<std::pair<std::string, std::string>> filesToTest{{"test", ".jpg"}, {"test1", ".jpg"}, {"test2", ".jpg"}, {"test3", ".jpg"}, {"test4", ".jpg"}};
 //    //m_fileHandler = std::make_shared<FileHandler>();
@@ -21,11 +21,13 @@ EdgeDetector::EdgeDetector(const std::shared_ptr<IEdgeDetectorAlgorithm> &detect
 //    }
 }
 
-void EdgeDetector::processImage(const uint8_t* const bufferAddr,double* * edges)
+void EdgeDetector::processImage(const std::array<std::array<uint8_t, imgWidth>, imgHeight>& rawImage, std::array<std::array<double, imgWidth>, imgHeight>& edges)
 {
-    std::cout << "Processing image of size: " << std::to_string(imgWidth * imgHeight) << std::endl;
-    m_detectionEdgeAlgo->process(bufferAddr, edges);
-   // std::cout << "Gradient size: " << std::to_string(detectedEdges.size()) << std::endl;
+    const size_t sizeW = rawImage.size();
+    const size_t sizeH = rawImage.at(0).size();
+    const auto totalSize = sizeW * sizeH;
+
+     m_detectionEdgeAlgo->process(rawImage, edges);
 }
 
 }
